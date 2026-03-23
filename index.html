@@ -11,72 +11,64 @@
 
     <style>
         :root {
-            --bg-color: #f8fafc;
+            --bg-color: #fff5f7; /* Soft Pink Background */
             --card-bg: #ffffff;
-            --primary-accent: #6366f1; /* Soft Indigo */
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-            --input-bg: #fcfdfe;
-            --input-border: #e2e8f0;
+            --primary-accent: #f472b6; /* Toz Pembe */
+            --text-main: #4a4a4a;
+            --text-muted: #9f9f9f;
+            --input-bg: #fffafb;
+            --input-border: #ffe4e9;
         }
 
-        * {
-            box-sizing: border-box;
-            -webkit-font-smoothing: antialiased;
-        }
+        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
 
         body {
             font-family: 'Inter', sans-serif;
             background-color: var(--bg-color);
-            background-image: radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.05) 0px, transparent 50%), 
-                              radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.05) 0px, transparent 50%);
-            color: var(--text-main);
             margin: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: 40px 20px;
         }
 
         .card {
             background: var(--card-bg);
             width: 100%;
-            max-width: 440px;
+            max-width: 550px;
             padding: 40px;
-            border-radius: 32px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.035);
+            border-radius: 40px;
+            box-shadow: 0 20px 40px rgba(244, 114, 182, 0.1);
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.8);
+            border: 2px solid #fff;
         }
 
         h1 {
-            font-size: 1.85rem;
-            font-weight: 700;
+            font-size: 2.2rem;
+            font-weight: 800;
             margin: 0 0 10px 0;
-            color: var(--text-main);
-            letter-spacing: -0.03em;
+            color: var(--primary-accent); /* Toz Pembe Başlık */
+            letter-spacing: -0.04em;
         }
 
         .description {
             font-size: 0.95rem;
             color: var(--text-muted);
-            margin-bottom: 35px;
-            line-height: 1.5;
+            margin-bottom: 30px;
         }
 
-        .input-wrapper {
-            margin-bottom: 20px;
-            text-align: left;
-        }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+
+        .input-wrapper { margin-bottom: 18px; text-align: left; }
 
         .label {
             display: block;
-            font-size: 0.85rem;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: var(--text-muted);
-            margin-left: 2px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: #d1a3ac;
+            letter-spacing: 0.05em;
         }
 
         .input-container {
@@ -84,149 +76,127 @@
             align-items: center;
             background: var(--input-bg);
             border: 1.5px solid var(--input-border);
-            border-radius: 16px;
-            padding: 14px 18px;
-            transition: all 0.25s ease;
+            border-radius: 18px;
+            padding: 12px 16px;
+            transition: all 0.3s ease;
         }
 
         .input-container:focus-within {
             border-color: var(--primary-accent);
             background: #fff;
-            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.08);
-            transform: translateY(-1px);
+            box-shadow: 0 0 0 4px rgba(244, 114, 182, 0.1);
         }
 
-        .input-container i {
-            color: #94a3b8;
-            margin-right: 14px;
-            font-size: 1.1rem;
-        }
+        .input-container i { color: #f9a8d4; margin-right: 12px; }
 
         input, select {
             border: none;
             background: transparent;
             outline: none;
             width: 100%;
-            font-size: 1rem;
+            font-size: 0.95rem;
             color: var(--text-main);
             font-family: inherit;
         }
 
-        .social-section {
-            margin-top: 30px;
-            text-align: left;
-        }
+        .social-section { margin-top: 25px; text-align: left; }
 
         .social-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 15px;
-        }
-
-        .social-title {
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--text-muted);
+            margin-bottom: 12px;
         }
 
         .add-btn {
-            background: #eef2ff;
+            background: #ffe4e9;
             color: var(--primary-accent);
             border: none;
-            padding: 6px 12px;
-            border-radius: 10px;
+            padding: 8px 15px;
+            border-radius: 12px;
             font-size: 0.8rem;
             font-weight: 700;
             cursor: pointer;
             transition: 0.2s;
         }
 
-        .add-btn:hover {
-            background: var(--primary-accent);
-            color: #fff;
-        }
+        .add-btn:hover { background: var(--primary-accent); color: #fff; }
 
         .dynamic-row {
             display: grid;
             grid-template-columns: 1fr 1.5fr;
-            gap: 12px;
-            margin-bottom: 12px;
-            animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(5px); }
-            to { opacity: 1; transform: translateY(0); }
+            gap: 10px;
+            margin-bottom: 10px;
         }
 
         .qr-area {
-            margin-top: 40px;
+            margin-top: 35px;
             padding: 25px;
-            background: #f8fafc;
-            border-radius: 24px;
+            background: #fffafa;
+            border-radius: 30px;
             display: inline-block;
-            transition: 0.3s;
+            border: 1px dashed #ffd1da;
         }
 
-        #qrcode canvas {
-            border-radius: 12px;
-        }
-
-        /* Custom scrollbar for selects */
-        select::-webkit-scrollbar { width: 6px; }
-        select::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
-
+        #qrcode canvas { border-radius: 15px; }
     </style>
 </head>
 <body>
 
 <div class="card">
     <h1>LinkUp QR</h1>
-    <p class="description">Your instant digital gateway. <br> Fill in the details to generate your card.</p>
+    <p class="description">Your elegant digital identity.</p>
 
-    <div class="input-wrapper">
-        <span class="label">FULL NAME</span>
-        <div class="input-container">
-            <i class="fa-regular fa-user"></i>
-            <input type="text" id="name" placeholder="Enter your name" oninput="generateVCF()">
+    <div class="grid-2">
+        <div class="input-wrapper">
+            <span class="label">FIRST NAME</span>
+            <div class="input-container"><input type="text" id="fname" placeholder="John" oninput="generateVCF()"></div>
+        </div>
+        <div class="input-wrapper">
+            <span class="label">LAST NAME</span>
+            <div class="input-container"><input type="text" id="lname" placeholder="Doe" oninput="generateVCF()"></div>
+        </div>
+    </div>
+
+    <div class="grid-2">
+        <div class="input-wrapper">
+            <span class="label">JOB TITLE</span>
+            <div class="input-container"><input type="text" id="title" placeholder="Engineer" oninput="generateVCF()"></div>
+        </div>
+        <div class="input-wrapper">
+            <span class="label">COMPANY</span>
+            <div class="input-container"><input type="text" id="company" placeholder="Company Inc." oninput="generateVCF()"></div>
         </div>
     </div>
 
     <div class="input-wrapper">
         <span class="label">PHONE NUMBER</span>
         <div class="input-container">
-            <select id="country" style="width: 90px; margin-right: 8px;" onchange="generateVCF()">
-                <option value="+90">🇹🇷 +90</option>
-                <option value="+1">🇺🇸 +1</option>
-                <option value="+44">🇬🇧 +44</option>
-                <option value="+49">🇩🇪 +49</option>
-                <option value="+33">🇫🇷 +33</option>
-                <option value="+39">🇮🇹 +39</option>
-                <option value="+31">🇳🇱 +31</option>
-                <option value="+971">🇦🇪 +971</option>
-                <option value="+966">🇸🇦 +966</option>
-                <option value="+7">🇷🇺 +7</option>
-                <option value="+81">🇯🇵 +81</option>
-                <option value="+82">🇰🇷 +82</option>
-            </select>
-            <input type="tel" id="phone" placeholder="5xx xxx xxxx" oninput="generateVCF()">
+            <select id="country" style="width: 140px;" onchange="generateVCF()">
+                </select>
+            <input type="tel" id="phone" placeholder="Phone digits" oninput="generateVCF()">
         </div>
     </div>
 
     <div class="input-wrapper">
-        <span class="label">EMAIL ADDRESS</span>
+        <span class="label">WEBSITE</span>
+        <div class="input-container">
+            <i class="fa-solid fa-link"></i>
+            <input type="url" id="website" placeholder="https://..." oninput="generateVCF()">
+        </div>
+    </div>
+
+    <div class="input-wrapper">
+        <span class="label">EMAIL</span>
         <div class="input-container">
             <i class="fa-regular fa-envelope"></i>
-            <input type="email" id="email" placeholder="example@mail.com" oninput="generateVCF()">
+            <input type="email" id="email" placeholder="hello@world.com" oninput="generateVCF()">
         </div>
     </div>
 
     <div class="social-section">
         <div class="social-header">
-            <span class="social-title">Social Profiles</span>
+            <span class="label">SOCIAL PROFILES</span>
             <button class="add-btn" onclick="addSocial()">+ Add New</button>
         </div>
         <div id="socialList"></div>
@@ -234,58 +204,77 @@
 
     <div id="qrContainer" class="qr-area" style="display: none;">
         <div id="qrcode"></div>
-        <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 15px; font-weight: 500;">Scan to add contact</p>
+        <p style="font-size: 0.75rem; color: #f472b6; margin-top: 10px; font-weight: 600;">Scan to Save Contact</p>
     </div>
 </div>
 
 <script>
+    // GÖRSELLERDEKİ TÜM ÜLKE KODLARI
+    const countries = [
+        { n: "Türkiye", c: "+90" }, { n: "Fransa", c: "+33" }, { n: "Belçika", c: "+32" },
+        { n: "Hollanda", c: "+31" }, { n: "Almanya", c: "+49" }, { n: "İtalya", c: "+39" },
+        { n: "Birleşik Krallık", c: "+44" }, { n: "İrlanda", c: "+353" }, { n: "Danimarka", c: "+45" },
+        { n: "Yunanistan", c: "+30" }, { n: "Portekiz", c: "+351" }, { n: "İspanya", c: "+34" },
+        { n: "Lüksemburg", c: "+352" }, { n: "İzlanda", c: "+354" }, { n: "Norveç", c: "+47" },
+        { n: "İsveç", c: "+46" }, { n: "Finlandiya", c: "+358" }, { n: "İsviçre", c: "+41" },
+        { n: "Avusturya", c: "+43" }, { n: "Azerbaycan", c: "+994" }, { n: "Kazakistan", c: "+7" },
+        { n: "Rusya", c: "+7" }, { n: "ABD", c: "+1" }, { n: "Kanada", c: "+1" },
+        { n: "KKTC", c: "+392" }, { n: "Güney Kore", c: "+82" }, { n: "Japonya", c: "+81" },
+        { n: "BAE", c: "+971" }, { n: "Suudi Arabistan", c: "+966" }, { n: "Katar", c: "+974" }
+    ];
+
+    // İSTEDİĞİN TÜM SOSYAL MEDYA PLATFORMLARI
+    const socialPlatforms = [
+        "Facebook", "YouTube", "WhatsApp", "Instagram", "WeChat", "TikTok", 
+        "Messenger", "Douyin", "QQ", "Telegram", "Snapchat", "Kuaishou", 
+        "Pinterest", "Reddit", "Twitter / X", "LinkedIn", "Baidu Tieba", 
+        "Sina Weibo", "Viber", "Discord"
+    ];
+
+    function init() {
+        const countrySelect = document.getElementById('country');
+        countries.sort((a,b) => a.n.localeCompare(b.n)).forEach(item => {
+            const opt = new Option(`${item.n} (${item.c})`, item.c);
+            countrySelect.add(opt);
+        });
+        addSocial();
+    }
+
     function addSocial() {
         const list = document.getElementById('socialList');
         const row = document.createElement('div');
         row.className = 'dynamic-row';
+        let options = socialPlatforms.map(p => `<option value="${p}">${p}</option>`).join('');
         row.innerHTML = `
-            <div class="input-container" style="padding: 10px 14px;">
-                <select onchange="generateVCF()">
-                    <option value="Instagram">Instagram</option>
-                    <option value="LinkedIn">LinkedIn</option>
-                    <option value="X">X (Twitter)</option>
-                    <option value="GitHub">GitHub</option>
-                    <option value="YouTube">YouTube</option>
-                    <option value="TikTok">TikTok</option>
-                    <option value="Web">Website</option>
-                </select>
-            </div>
-            <div class="input-container" style="padding: 10px 14px;">
-                <input type="text" placeholder="Username" oninput="generateVCF()">
-            </div>
+            <div class="input-container"><select onchange="generateVCF()">${options}</select></div>
+            <div class="input-container"><input type="text" placeholder="Username/ID" oninput="generateVCF()"></div>
         `;
         list.appendChild(row);
-        generateVCF();
     }
 
     function generateVCF() {
-        const name = document.getElementById('name').value;
+        const fn = document.getElementById('fname').value;
+        const ln = document.getElementById('lname').value;
+        const job = document.getElementById('title').value;
+        const comp = document.getElementById('company').value;
         const phone = document.getElementById('country').value + document.getElementById('phone').value;
         const email = document.getElementById('email').value;
+        const web = document.getElementById('website').value;
 
-        if (!name && !email && document.getElementById('phone').value === "") {
+        if (!fn && !ln && !email && !phone.length > 4) {
             document.getElementById('qrContainer').style.display = 'none';
             return;
         }
 
-        let vcf = `BEGIN:VCARD\nVERSION:3.0\nFN:${name}\nTEL;TYPE=CELL:${phone}\nEMAIL:${email}`;
+        let vcf = `BEGIN:VCARD\nVERSION:3.0\nFN:${fn} ${ln}\nN:${ln};${fn};;;\nORG:${comp}\nTITLE:${job}\nTEL;TYPE=CELL:${phone}\nEMAIL:${email}\nURL:${web}`;
 
         document.querySelectorAll('.dynamic-row').forEach(row => {
-            const platform = row.querySelector('select').value;
-            const handle = row.querySelector('input').value;
-            if (handle) {
-                if (platform === 'Web') vcf += `\nURL:${handle}`;
-                else vcf += `\nURL;TYPE=${platform}:https://${platform.toLowerCase()}.com/${handle}`;
-            }
+            const p = row.querySelector('select').value;
+            const h = row.querySelector('input').value;
+            if (h) vcf += `\nX-SOCIAL-PROFILE;TYPE=${p}:${h}`;
         });
 
         vcf += `\nEND:VCARD`;
-        
         document.getElementById('qrContainer').style.display = 'inline-block';
         renderQR(vcf);
     }
@@ -293,21 +282,13 @@
     function renderQR(data) {
         const qrDiv = document.getElementById('qrcode');
         qrDiv.innerHTML = "";
-        QRCode.toCanvas(data, { 
-            width: 180,
-            color: {
-                dark: '#0f172a',
-                light: '#f8fafc'
-            }
-        }, function (err, canvas) {
+        QRCode.toCanvas(data, { width: 180, color: { dark: '#4a4a4a', light: '#ffffff' } }, (err, cvs) => {
             if (err) console.error(err);
-            qrDiv.appendChild(canvas);
+            qrDiv.appendChild(cvs);
         });
     }
 
-    // Initialize with one field
-    addSocial();
+    window.onload = init;
 </script>
-
 </body>
 </html>
