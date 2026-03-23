@@ -1,143 +1,312 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>QR Contact</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkUp QR | Digital Contact Card</title>
 
-<!-- ICONS -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
 
-<!-- QR -->
-<script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <style>
+        :root {
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --primary-accent: #6366f1; /* Soft Indigo */
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --input-bg: #fcfdfe;
+            --input-border: #e2e8f0;
+        }
 
-<style>
-body {
-  font-family: Arial;
-  text-align: center;
-  padding: 20px;
-}
+        * {
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
+        }
 
-.container {
-  max-width: 400px;
-  margin: auto;
-}
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            background-image: radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.05) 0px, transparent 50%), 
+                              radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.05) 0px, transparent 50%);
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
 
-.input-group {
-  display: flex;
-  align-items: center;
-  margin: 10px 0;
-}
+        .card {
+            background: var(--card-bg);
+            width: 100%;
+            max-width: 440px;
+            padding: 40px;
+            border-radius: 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.035);
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.8);
+        }
 
-.input-group i {
-  margin-right: 10px;
-}
+        h1 {
+            font-size: 1.85rem;
+            font-weight: 700;
+            margin: 0 0 10px 0;
+            color: var(--text-main);
+            letter-spacing: -0.03em;
+        }
 
-input, select {
-  flex: 1;
-  padding: 8px;
-}
+        .description {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            margin-bottom: 35px;
+            line-height: 1.5;
+        }
 
-#qrcode {
-  margin-top: 20px;
-}
-</style>
+        .input-wrapper {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+            margin-left: 2px;
+        }
+
+        .input-container {
+            display: flex;
+            align-items: center;
+            background: var(--input-bg);
+            border: 1.5px solid var(--input-border);
+            border-radius: 16px;
+            padding: 14px 18px;
+            transition: all 0.25s ease;
+        }
+
+        .input-container:focus-within {
+            border-color: var(--primary-accent);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.08);
+            transform: translateY(-1px);
+        }
+
+        .input-container i {
+            color: #94a3b8;
+            margin-right: 14px;
+            font-size: 1.1rem;
+        }
+
+        input, select {
+            border: none;
+            background: transparent;
+            outline: none;
+            width: 100%;
+            font-size: 1rem;
+            color: var(--text-main);
+            font-family: inherit;
+        }
+
+        .social-section {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .social-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .social-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .add-btn {
+            background: #eef2ff;
+            color: var(--primary-accent);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .add-btn:hover {
+            background: var(--primary-accent);
+            color: #fff;
+        }
+
+        .dynamic-row {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 12px;
+            margin-bottom: 12px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .qr-area {
+            margin-top: 40px;
+            padding: 25px;
+            background: #f8fafc;
+            border-radius: 24px;
+            display: inline-block;
+            transition: 0.3s;
+        }
+
+        #qrcode canvas {
+            border-radius: 12px;
+        }
+
+        /* Custom scrollbar for selects */
+        select::-webkit-scrollbar { width: 6px; }
+        select::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 10px; }
+
+    </style>
 </head>
-
 <body>
 
-<div class="container">
-<h2>Dijital Kartını Oluştur</h2>
+<div class="card">
+    <h1>LinkUp QR</h1>
+    <p class="description">Your instant digital gateway. <br> Fill in the details to generate your card.</p>
 
-<div class="input-group">
-<i class="fa fa-user"></i>
-<input id="name" placeholder="Ad Soyad">
-</div>
+    <div class="input-wrapper">
+        <span class="label">FULL NAME</span>
+        <div class="input-container">
+            <i class="fa-regular fa-user"></i>
+            <input type="text" id="name" placeholder="Enter your name" oninput="generateVCF()">
+        </div>
+    </div>
 
-<div class="input-group">
-<i class="fa fa-phone"></i>
-<select id="country">
-  <option value="+90">🇹🇷 +90</option>
-  <option value="+1">🇺🇸 +1</option>
-  <option value="+44">🇬🇧 +44</option>
-</select>
-<input id="phone" placeholder="Telefon">
-</div>
+    <div class="input-wrapper">
+        <span class="label">PHONE NUMBER</span>
+        <div class="input-container">
+            <select id="country" style="width: 90px; margin-right: 8px;" onchange="generateVCF()">
+                <option value="+90">🇹🇷 +90</option>
+                <option value="+1">🇺🇸 +1</option>
+                <option value="+44">🇬🇧 +44</option>
+                <option value="+49">🇩🇪 +49</option>
+                <option value="+33">🇫🇷 +33</option>
+                <option value="+39">🇮🇹 +39</option>
+                <option value="+31">🇳🇱 +31</option>
+                <option value="+971">🇦🇪 +971</option>
+                <option value="+966">🇸🇦 +966</option>
+                <option value="+7">🇷🇺 +7</option>
+                <option value="+81">🇯🇵 +81</option>
+                <option value="+82">🇰🇷 +82</option>
+            </select>
+            <input type="tel" id="phone" placeholder="5xx xxx xxxx" oninput="generateVCF()">
+        </div>
+    </div>
 
-<div class="input-group">
-<i class="fa fa-envelope"></i>
-<input id="email" placeholder="Email">
-</div>
+    <div class="input-wrapper">
+        <span class="label">EMAIL ADDRESS</span>
+        <div class="input-container">
+            <i class="fa-regular fa-envelope"></i>
+            <input type="email" id="email" placeholder="example@mail.com" oninput="generateVCF()">
+        </div>
+    </div>
 
-<h4>Sosyal Medya</h4>
+    <div class="social-section">
+        <div class="social-header">
+            <span class="social-title">Social Profiles</span>
+            <button class="add-btn" onclick="addSocial()">+ Add New</button>
+        </div>
+        <div id="socialList"></div>
+    </div>
 
-<div id="socials"></div>
-
-<button onclick="addSocial()">+ Sosyal Medya Ekle</button>
-
-<div id="qrcode"></div>
-
+    <div id="qrContainer" class="qr-area" style="display: none;">
+        <div id="qrcode"></div>
+        <p style="font-size: 0.75rem; color: #94a3b8; margin-top: 15px; font-weight: 500;">Scan to add contact</p>
+    </div>
 </div>
 
 <script>
-function generateVCF() {
-  const name = document.getElementById("name").value;
-  const phone = document.getElementById("country").value + document.getElementById("phone").value;
-  const email = document.getElementById("email").value;
-
-  let vcf = `
-BEGIN:VCARD
-VERSION:3.0
-FN:${name}
-TEL:${phone}
-EMAIL:${email}
-`;
-
-  document.querySelectorAll(".social").forEach(s => {
-    const type = s.querySelector("select").value;
-    const value = s.querySelector("input").value;
-    if(value) {
-      vcf += `URL:${value}\n`;
+    function addSocial() {
+        const list = document.getElementById('socialList');
+        const row = document.createElement('div');
+        row.className = 'dynamic-row';
+        row.innerHTML = `
+            <div class="input-container" style="padding: 10px 14px;">
+                <select onchange="generateVCF()">
+                    <option value="Instagram">Instagram</option>
+                    <option value="LinkedIn">LinkedIn</option>
+                    <option value="X">X (Twitter)</option>
+                    <option value="GitHub">GitHub</option>
+                    <option value="YouTube">YouTube</option>
+                    <option value="TikTok">TikTok</option>
+                    <option value="Web">Website</option>
+                </select>
+            </div>
+            <div class="input-container" style="padding: 10px 14px;">
+                <input type="text" placeholder="Username" oninput="generateVCF()">
+            </div>
+        `;
+        list.appendChild(row);
+        generateVCF();
     }
-  });
 
-  vcf += "END:VCARD";
+    function generateVCF() {
+        const name = document.getElementById('name').value;
+        const phone = document.getElementById('country').value + document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
 
-  const blob = new Blob([vcf], { type: "text/vcard" });
-  const url = URL.createObjectURL(blob);
+        if (!name && !email && document.getElementById('phone').value === "") {
+            document.getElementById('qrContainer').style.display = 'none';
+            return;
+        }
 
-  generateQR(url);
-}
+        let vcf = `BEGIN:VCARD\nVERSION:3.0\nFN:${name}\nTEL;TYPE=CELL:${phone}\nEMAIL:${email}`;
 
-function generateQR(data) {
-  const qrDiv = document.getElementById("qrcode");
-  qrDiv.innerHTML = "";
+        document.querySelectorAll('.dynamic-row').forEach(row => {
+            const platform = row.querySelector('select').value;
+            const handle = row.querySelector('input').value;
+            if (handle) {
+                if (platform === 'Web') vcf += `\nURL:${handle}`;
+                else vcf += `\nURL;TYPE=${platform}:https://${platform.toLowerCase()}.com/${handle}`;
+            }
+        });
 
-  QRCode.toCanvas(data, function (err, canvas) {
-    qrDiv.appendChild(canvas);
-  });
-}
+        vcf += `\nEND:VCARD`;
+        
+        document.getElementById('qrContainer').style.display = 'inline-block';
+        renderQR(vcf);
+    }
 
-function addSocial() {
-  const div = document.createElement("div");
-  div.className = "social input-group";
+    function renderQR(data) {
+        const qrDiv = document.getElementById('qrcode');
+        qrDiv.innerHTML = "";
+        QRCode.toCanvas(data, { 
+            width: 180,
+            color: {
+                dark: '#0f172a',
+                light: '#f8fafc'
+            }
+        }, function (err, canvas) {
+            if (err) console.error(err);
+            qrDiv.appendChild(canvas);
+        });
+    }
 
-  div.innerHTML = `
-    <select>
-      <option value="instagram">Instagram</option>
-      <option value="linkedin">LinkedIn</option>
-      <option value="github">GitHub</option>
-    </select>
-    <input placeholder="Link gir">
-  `;
-
-  document.getElementById("socials").appendChild(div);
-
-  div.querySelector("input").addEventListener("input", generateVCF);
-}
-
-document.querySelectorAll("input, select").forEach(el => {
-  el.addEventListener("input", generateVCF);
-});
+    // Initialize with one field
+    addSocial();
 </script>
 
 </body>
